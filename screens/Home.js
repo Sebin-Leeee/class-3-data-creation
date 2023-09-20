@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 import { Button } from "react-native-paper";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 export default function Home({ navigation }) {
   const check = () => {
@@ -8,17 +9,18 @@ export default function Home({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
-      <Button
-        icon="camera"
-        mode="contained"
-        onPress={() => check()}
-        style={styles.btn}
-      >
-        See Data
-      </Button>
-
-    </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={styles.container}>
+        <Button
+          icon="camera"
+          mode="contained"
+          onPress={() => check()}
+          style={styles.btn}
+        >
+          See Data
+        </Button>
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 
