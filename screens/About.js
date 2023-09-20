@@ -1,23 +1,28 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { bookStore } from "../data/books";
 import { useState } from "react";
 import { Avatar } from "react-native-paper";
+import { Button } from 'react-native-paper';
 
 export default function About({ navigation }) {
   const [data, setData] = useState();
+  const [dataTwo, setDataTwo] = useState();
 
   const addingData = () => {
-    console.log("started");
     setData(bookStore);
+  };
+
+  const addingDataTwo = () => {
+    setDataTwo(bookStore);
   };
 
   return (
     <View style={styles.container}>
-      <Text>Welcome to the dashboard</Text>
+      <Avatar.Icon size={48} icon="folder" />
+      <Text style={styles.title} >Click the button to see data</Text>
       <View style={styles.icon}>
-        <Avatar.Icon size={36} icon="folder" />
-        <Button title="Show Data" onPress={() => addingData()} />
+        <Button style={styles.button} mode="elevated" onPress={() => addingData()}>Java</Button>
         {data &&
           data.books.map((b, index) => {
             if (b.category.toLowerCase() == "java") {
@@ -37,6 +42,28 @@ export default function About({ navigation }) {
             }
           })}
       </View>
+
+      <View style={styles.icon}>
+        <Button style={styles.button} mode="contained-tonal" onPress={() => addingDataTwo()}>OOP</Button>
+        {dataTwo &&
+          dataTwo.books.map((c, index) => {
+            if (c.category.toLowerCase() == "oop") {
+              return (
+                <View key={index}>
+                  <Text>{c.title}</Text>
+                  {c.authors &&
+                    c.authors.map((d, ind) => {
+                      return (
+                        <View key={ind}>
+                          <Text>{d}</Text>
+                        </View>
+                      );
+                    })}
+                </View>
+              );
+            }
+          })}
+      </View>
     </View>
   );
 }
@@ -47,11 +74,19 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
-    rowGap: 10,
+    rowGap: 20,
   },
-  icon: {
-    display: "flex",
-    flexDirection: "row",
-    gap: 15
+  title:{
+    fontSize: 18,
   },
+  button: {
+    width: 100,
+  },
+  icon : {
+    display : "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: 15,
+  }
 });
